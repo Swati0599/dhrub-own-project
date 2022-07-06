@@ -17,6 +17,7 @@ var factory6, factory6Img;
 
 var bulletGroup ;
 var cover, coverImg;
+var enemy;
 
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!        PRELOAD           !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -36,9 +37,10 @@ function preload() {
 
   manImage = loadAnimation("assets/p5.png");
   manAnimation = loadAnimation("assets/p2.png", "assets/p3.png", "assets/p4.png");
-  enemy1 = loadImage(  "assets/enemy.png" );  //, "assets/enemy.png" , "assets/enemy-.png" ,  "assets/enemy-.png" )
+  enemyImg = loadImage(  "assets/enemy.png" );  //, "assets/enemy.png" , "assets/enemy-.png" ,  "assets/enemy-.png" )
   bulletImg = loadImage("assets/bullet.png");
   bulletImg2 = loadImage("assets/bullet-.png");
+  spaceShipImg=loadImage("assets/spaceship.png");
 
 }
 function setup() {
@@ -62,11 +64,28 @@ function setup() {
   manStand.scale = 3;
   manStand.addAnimation("man2", manAnimation);
 
-  // creating enemy
-  enemy = createSprite(1250 , 500 , 60 , 60);
-  enemy.addImage(enemy1);
-  enemy.scale = 3;
-  enemy.velocityX = -1
+  enemy1 = createSprite(1250 , 500 , 60 , 60);
+  enemy1.addImage(enemyImg);
+  enemy1.scale = 3;
+  enemy1.velocityX = -4
+
+  enemy2 = createSprite(1250 , 500 , 60 , 60);
+  enemy2.addImage(enemyImg);
+  enemy2.scale = 3;
+  enemy2.velocityX = -3
+
+  enemy3 = createSprite(1250 , 500 , 60 , 60);
+  enemy3.addImage(enemyImg);
+  enemy3.scale = 3;
+  enemy3.velocityX = -2
+
+  enemy4 = createSprite(1250 , 500 , 60 , 60);
+  enemy4.addImage("enemy",enemyImg);
+  //enemy4.addImage(spaceShipImg);
+  enemy4.scale = 3;
+  enemy4.velocityX = -1
+
+  
 
   bulletGroup=createGroup()
 
@@ -109,9 +128,29 @@ function draw() {
 
     
 
-    if(bulletGroup.isTouching(enemy)){
-      enemy.destroy();
+    if(bulletGroup.isTouching(enemy1)){
+      enemy1.destroy();
+      bulletGroup.destroyEach();
     }   
+    if(bulletGroup.isTouching(enemy2)){
+      enemy2.destroy();
+      bulletGroup.destroyEach();
+    }   
+    if(bulletGroup.isTouching(enemy3)){
+      enemy3.destroy();
+      bulletGroup.destroyEach();
+    } 
+
+    if(bulletGroup.isTouching(enemy4)){
+      enemy4.addImage("enemy",spaceShipImg)
+      enemy4.scale=0.8;
+      //comment the below line if you want to keep moving 
+      enemy4.velocityX=0
+      bulletGroup.destroyEach();
+
+    }     
+
+    
 
 
 
@@ -133,4 +172,6 @@ function spawnBullet(){
   bulletGroup.add(bullet)
  
 }
+
+
 
